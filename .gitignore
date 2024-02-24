@@ -1,0 +1,4 @@
+.streamlit/secret.toml
+.streamlit/config.yaml
+.idea
+.DS_Store
