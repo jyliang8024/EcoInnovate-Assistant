@@ -80,15 +80,7 @@ def create_main_layout(username):
             
             os.write(1,b'chat count under limits\n')
 
-            # collect and handle user question for the current chat
-            prompt = st.chat_input("Input your idea here ...", key="user_input")
-
-            if 'user_input' in st.session_state:
-                os.write(1, f"prompt: {st.session_state['user_input']}\n".encode('utf-8'))
-            else:
-                os.write(1, b'None\n')
-
-            if st.session_state['user_input']:
+            def on_submit():
                 os.write(1, b'usr entered chat input\n')
                 st.session_state[messages_key].append(
                     {"role": "user", "content": {"text": st.session_state["user_input"], "img": None}})
@@ -110,7 +102,8 @@ def create_main_layout(username):
                     # img
                     img_response = img_generator(st.session_state["user_input"], chat_response)
 
-                    assistant_message = {"role": "assistant", "content": {"text": chat_response, "img": img_response}}
+                    assistant_message = {"role": "assistant",
+                                         "content": {"text": chat_response, "img": img_response}}
 
                     os.write(1, b'assistant generated response\n')
 
@@ -118,17 +111,28 @@ def create_main_layout(username):
                     message_placeholder.markdown(assistant_message["content"]["text"])
                     # then display image
                     if assistant_message["content"]["img"]:
-                        st.image(assistant_message["content"]["img"], caption="Sustainable Product Design", width=500)
+                        st.image(assistant_message["content"]["img"], caption="Sustainable Product Design",
+                                 width=500)
 
                 # Save assistant response for displaying the message chain
                 st.session_state[messages_key].append(assistant_message)
 
                 # Place the download button, after the chat input
                 create_download_button(st.session_state[messages_key], current_chat)
+
+            # collect and handle user question for the current chat
+            prompt = st.chat_input("Input your idea here ...", key="user_input")
+
+            if 'user_input' in st.session_state:
+                os.write(1, f"prompt: {st.session_state['user_input']}\n".encode('utf-8'))
+
             else:
-                if st.session_state[username] == CHAT_LIMIT_PER_USER:
-                    st.warning("You've reached the chat limit. Please save your chat history.")
-                    create_download_button(st.session_state[messages_key], current_chat)
+                os.write(1, b'None\n')
+
+        else:
+            st.warning("You've reached the chat limit. Please save your chat history.")
+            create_download_button(st.session_state[messages_key], current_chat)
+
     else:
         st.divider()
         st.caption("Notice:")

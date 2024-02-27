@@ -63,7 +63,7 @@ def create_sidebar():
 
         # model settings
         st.markdown("Model Parameter Settings:")
-        st.caption("By adjusting these parameters, you can control how the assistant behaves, such as reliability, creativity, and the style of interactions.")
+        st.caption("By adjusting these parameters, you can control how the assistant behaves, such as interaction style and creativity .")
         temperature = st.slider(
             label="Temperature",
             min_value=0.0,
