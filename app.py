@@ -24,10 +24,6 @@ authenticator = stauth.Authenticate(
     st.secrets['cookie']['expiry_days']
 )
 
-# dict(st.secrets['credentials'])
-# st.secrets['cookie']['cookie_name'],
-# st.secrets['cookie']['key'],
-# st.secrets['cookie']['expiry_days']
 
 # render the login module
 name, authentication_status, username = authenticator.login()
@@ -45,7 +41,6 @@ if st.session_state["authentication_status"]:
         cols[2].write(f"Frequency Penalty: {st.session_state['frequency_penalty']}")
         cols[3].write(f"Presence Penalty: {st.session_state['presence_penalty']}")
         with cols[4]:
-            os.write(1, b'enter cols4\n')
             authenticator.logout()
             os.write(1, b'log out successfully\n')
 

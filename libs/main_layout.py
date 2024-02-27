@@ -14,7 +14,7 @@ client = OpenAI()
 
 
 # chat limit
-CHAT_LIMIT_PER_USER = 8
+CHAT_LIMIT_PER_USER = 3
 
 
 # convert chat history into string
@@ -80,12 +80,18 @@ def create_main_layout(username):
             
             os.write(1,b'chat count under limits\n')
 
-            def on_submit():
-                # if prompt:
+            # collect and handle user question for the current chat
+            prompt = st.chat_input("Input your idea here ...", key="user_input")
 
+            if 'user_input' in st.session_state:
+                os.write(1, f"prompt: {st.session_state['user_input']}\n".encode('utf-8'))
+            else:
+                os.write(1, b'None\n')
+
+            if st.session_state['user_input']:
                 os.write(1, b'usr entered chat input\n')
-
-                st.session_state[messages_key].append({"role": "user", "content": {"text": st.session_state["user_input"], "img": None}})
+                st.session_state[messages_key].append(
+                    {"role": "user", "content": {"text": st.session_state["user_input"], "img": None}})
                 with st.chat_message("user"):
                     st.markdown(st.session_state[messages_key][-1]["content"]["text"])
                 # refresh the chat count if user send messages
@@ -106,7 +112,7 @@ def create_main_layout(username):
 
                     assistant_message = {"role": "assistant", "content": {"text": chat_response, "img": img_response}}
 
-                    os.write(1, b'gpt generated response\n')
+                    os.write(1, b'assistant generated response\n')
 
                     # display text response first
                     message_placeholder.markdown(assistant_message["content"]["text"])
@@ -118,21 +124,15 @@ def create_main_layout(username):
                 st.session_state[messages_key].append(assistant_message)
 
                 # Place the download button, after the chat input
-                create_download_button(conversation_history, current_chat)
-
-            # collect and handle user question for the current chat
-            prompt = st.chat_input("Input your idea here ...", key="user_input", on_submit=on_submit)
-
-            if 'user_input' in st.session_state:
-                os.write(1, f"prompt: {st.session_state['user_input']}\n".encode('utf-8'))
+                create_download_button(st.session_state[messages_key], current_chat)
             else:
-                os.write(1, b'None\n')
-
-
-
+                if st.session_state[username] == CHAT_LIMIT_PER_USER:
+                    st.warning("You've reached the chat limit. Please save your chat history.")
+                    create_download_button(st.session_state[messages_key], current_chat)
     else:
         st.divider()
         st.caption("Notice:")
-        st.caption("1. Every User has the usage limits for EcoInnovate Assistant. The usage limits is set to :blue[10].")
+        st.caption("1. All buttons within the app require a quick double-click to activate.")
+        st.caption("2. Every User has the usage limits for EcoInnovate Assistant. The usage limits is set to :blue[10] sessions.")
         st.caption("2. Your conversations are private and not stored beyond your current session. All chat records will be cleared once you refresh the webpage.")
-        st.caption("3. You can save your chat history (only :blue[text]) locally by clicking the  *Download Chat History*  button.")
+        st.caption("3. You can save your chat history (:blue[text] only) locally by clicking the  *Download Chat History*  button.")
