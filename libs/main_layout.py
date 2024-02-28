@@ -121,7 +121,7 @@ def create_main_layout(username):
                 create_download_button(st.session_state[messages_key], current_chat)
 
             # collect and handle user question for the current chat
-            prompt = st.chat_input("Input your idea here ...", key="user_input")
+            prompt = st.chat_input("Input your idea here ...", key="user_input", on_submit=on_submit())
 
             if 'user_input' in st.session_state:
                 os.write(1, f"prompt: {st.session_state['user_input']}\n".encode('utf-8'))

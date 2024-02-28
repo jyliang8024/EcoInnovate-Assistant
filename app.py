@@ -42,7 +42,6 @@ if st.session_state["authentication_status"]:
         cols[3].write(f"Presence Penalty: {st.session_state['presence_penalty']}")
         with cols[4]:
             authenticator.logout()
-            os.write(1, b'log out successfully\n')
 
 if st.session_state["authentication_status"]:
     # define username as usr
