@@ -1,7 +1,8 @@
 # for Streamlit env sqlite3 compatibility
 __import__('pysqlite3')
 import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+if 'pysqlite3' in sys.modules:
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import streamlit as st
 import streamlit_authenticator as stauth
