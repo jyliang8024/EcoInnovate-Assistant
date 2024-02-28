@@ -14,7 +14,7 @@ client = OpenAI()
 
 
 # chat limit
-CHAT_LIMIT_PER_USER = 3
+CHAT_LIMIT_PER_USER = 11
 
 
 # convert chat history into string
@@ -117,12 +117,11 @@ def create_main_layout(username):
             prompt = st.chat_input("Input your idea here ...", key="user_input", on_submit=on_submit)
 
             if len(st.session_state[messages_key]) > 2:
-                # 当存储的信息数量超过2条时，显示下载按钮
+                # if amount of messages in the conversation is more than 2，create the download button
                 create_download_button(st.session_state[messages_key], current_chat)
             else:
                 st.caption(
                     "You'll be able to download the chat history once there are more than 3 messages.")
-
 
         else:
             st.warning("You've reached the chat limit. Please save your chat history.")

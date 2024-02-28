@@ -43,7 +43,7 @@ if st.session_state["authentication_status"]:
             authenticator.logout()
 
     with st.container():
-        cols = st.columns([2, 3, 3, 2])
+        cols = st.columns([2, 2, 3, 3])
         cols[0].write(f"Temp: {st.session_state['temperature']}")
         cols[1].write(f"Top-p: {st.session_state['top_p']}")
         cols[2].write(f"Frequency Penalty: {st.session_state['frequency_penalty']}")
