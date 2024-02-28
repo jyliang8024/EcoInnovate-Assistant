@@ -116,8 +116,9 @@ def create_main_layout(username):
 
                 # Save assistant response for displaying the message chain
                 st.session_state[messages_key].append(assistant_message)
-
+                os.write(1, b'assistant response saved\n')
                 # Place the download button, after the chat input
+                os.write(1, b'create button\n')
                 create_download_button(st.session_state[messages_key], current_chat)
 
             # collect and handle user question for the current chat

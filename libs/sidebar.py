@@ -62,7 +62,7 @@ def create_sidebar():
         st.caption("Please create a new chat to begin a conversation.")
 
         # model settings
-        st.markdown("Model Parameter Settings:")
+        st.header("Model Parameter Settings:")
         st.caption("By adjusting these parameters, you can control how the assistant behaves, such as interaction style and creativity .")
         temperature = st.slider(
             label="Temperature",
