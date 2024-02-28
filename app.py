@@ -36,13 +36,18 @@ if st.session_state["authentication_status"]:
     create_sidebar()
 
     with st.container():
-        cols = st.columns([1, 1, 3, 3, 2])
+        cols = st.columns([8, 2])
+        with cols[0]:
+            st.header(f'{st.session_state["current_chat"]}')
+        with cols[1]:
+            authenticator.logout()
+
+    with st.container():
+        cols = st.columns([2, 3, 3, 2])
         cols[0].write(f"Temp: {st.session_state['temperature']}")
         cols[1].write(f"Top-p: {st.session_state['top_p']}")
         cols[2].write(f"Frequency Penalty: {st.session_state['frequency_penalty']}")
         cols[3].write(f"Presence Penalty: {st.session_state['presence_penalty']}")
-        with cols[4]:
-            authenticator.logout()
 
 if st.session_state["authentication_status"]:
     # define username as usr

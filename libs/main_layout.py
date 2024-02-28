@@ -41,10 +41,6 @@ def create_download_button(chat_history, chat_name):
 
 def create_main_layout(username):
 
-    os.write(1,b'Entered create_main_layout function\n')
-
-    st.header(f'{st.session_state["current_chat"]}')
-
     # Initialize or retrieve the current chat session's messages
     current_chat = st.session_state["current_chat"]
     if current_chat != "default":
@@ -116,19 +112,17 @@ def create_main_layout(username):
 
                 # Save assistant response for displaying the message chain
                 st.session_state[messages_key].append(assistant_message)
-                os.write(1, b'assistant response saved\n')
-                # Place the download button, after the chat input
-                os.write(1, b'create button\n')
-                create_download_button(st.session_state[messages_key], current_chat)
 
             # collect and handle user question for the current chat
             prompt = st.chat_input("Input your idea here ...", key="user_input", on_submit=on_submit)
 
-            if 'user_input' in st.session_state:
-                os.write(1, f"prompt: {st.session_state['user_input']}\n".encode('utf-8'))
-
+            if len(st.session_state[messages_key]) > 2:
+                # 当存储的信息数量超过2条时，显示下载按钮
+                create_download_button(st.session_state[messages_key], current_chat)
             else:
-                os.write(1, b'None\n')
+                st.caption(
+                    "You'll be able to download the chat history once there are more than 3 messages.")
+
 
         else:
             st.warning("You've reached the chat limit. Please save your chat history.")
