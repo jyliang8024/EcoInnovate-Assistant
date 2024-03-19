@@ -12,7 +12,7 @@ Eco-innovate Assistant is powered by Chroma Database, GPT-4, DALL-E-3, and Strea
 - **Export Conversations as Markdown Files**: Users can easily document the design process and solutions by exporting their conversations to Markdown files, making it simpler to track progress and share insights with team members.
 
 ## Demo Video
-*To be added.*
+[![Watch the video](https://github.com/jyliang8024/EcoInnovate-Assistant/blob/main/images/screenshot%20of%20demo.jpg)](https://youtu.be/WOuJSC2YEig)
 
 ## Getting Started
 To begin the journey with Eco-innovate Assistant for your sustainable design projects, please follow these steps:
